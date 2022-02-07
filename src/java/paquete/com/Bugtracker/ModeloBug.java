@@ -115,8 +115,9 @@ public class ModeloBug {
                 String description = miRs.getString(4);
                 String status = miRs.getString(5);
                 String user = miRs.getString(6);
+                Date inicialf = miRs.getDate(7);
                 
-                bug =new Bug(codi,name,type,description,status,user);
+                bug =new Bug(codi,name,type,description,status,user,inicialf);
             }
                
             

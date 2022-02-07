@@ -165,6 +165,7 @@ public class ControladorBug extends HttpServlet {
         String status = request.getParameter("status");
         String user = request.getParameter("user");
         
+        
         Bug bug = new Bug(codibug,name,type,desc,status,user);
         
         modeloBug.actualizar(bug);

@@ -44,6 +44,10 @@
                     <td><input type="text" name="user" id="user" value="${bugaActualizar.bUser}"></td>
                 </tr>
                 <tr>
+                    <td><label for="inidate">Inicial date</label></td>
+                    <td><input type="text" name="inidate" id="inidate" value="${bugaActualizar.binitial_Date}"></td>
+                </tr>
+                <tr>
                     <td><input type="submit" name="boton_enviar" value="Enviar"></td>
                     <td><input type="submit" name="boton_limpiar" value="Limpiar"></td>
                 </tr>

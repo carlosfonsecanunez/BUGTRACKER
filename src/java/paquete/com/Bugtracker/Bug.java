@@ -83,6 +83,16 @@ public class Bug {
         this.bUser = bUser;
         
     }
+
+    public Bug(int codi, String name, String type, String description, String status, String user, Date inicialf) {
+        this.bCode = codi;
+        this.bName = name;
+        this.bType = type;
+        this.bDescription = description;
+        this.bStatus = status;
+        this.bUser = user;
+        this.binitial_Date = inicialf;
+    }
     /**
      * @return the bCode
      */
