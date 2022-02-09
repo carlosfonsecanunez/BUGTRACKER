@@ -53,7 +53,7 @@ public class ControladorBug extends HttpServlet {
         }
     }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
          String elcomando = request.getParameter("instruccion");
          
         
@@ -85,7 +85,11 @@ public class ControladorBug extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         try {
+             processRequest(request, response);
+         } catch (ParseException ex) {
+             Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
 
     /**
@@ -99,7 +103,11 @@ public class ControladorBug extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         try {
+             processRequest(request, response);
+         } catch (ParseException ex) {
+             Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
 
     /**
@@ -134,6 +142,7 @@ public class ControladorBug extends HttpServlet {
     }   
 
     private void insertarBugs(HttpServletRequest request, HttpServletResponse response) {
+        Bug newBug = null;
         String name = request.getParameter("bug_name");
         String type = request.getParameter("type");
         String description = request.getParameter("description");
@@ -144,29 +153,40 @@ public class ControladorBug extends HttpServlet {
         
         Date bugFecha = null;
          try {
+             
              bugFecha = formatoDate.parse(request.getParameter("init_date"));
+             
+             
          } catch (ParseException ex) {
              Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
          }
         //Date bugfechaFinal = null;
+        if(bugFecha == null){
+                 newBug= new Bug(name,type,description,status,user);
+                 modeloBug.addNewBug2(newBug);
+             }else{
         
-        Bug newBug = new Bug(name,type,description,status,user,bugFecha);
+        newBug = new Bug(name,type,description,status,user,bugFecha);
         
-        ModeloBug.addNewBug(newBug);
+        modeloBug.addNewBug(newBug);
+        }
         
         obtenerBugs(request,response);
     }
 
-    private void actualizar(HttpServletRequest request, HttpServletResponse response) {
+    private void actualizar(HttpServletRequest request, HttpServletResponse response) throws ParseException {
         int codibug = Integer.parseInt(request.getParameter("codigo_bug"));
         String name = request.getParameter("bug_name");
         String type = request.getParameter("type");
         String desc = request.getParameter("description");
         String status = request.getParameter("status");
         String user = request.getParameter("user");
+        SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Date fechaini = formatdate.parse(request.getParameter("inidate"));
         
         
-        Bug bug = new Bug(codibug,name,type,desc,status,user);
+        Bug bug = new Bug(codibug,name,type,desc,status,user,fechaini);
         
         modeloBug.actualizar(bug);
         

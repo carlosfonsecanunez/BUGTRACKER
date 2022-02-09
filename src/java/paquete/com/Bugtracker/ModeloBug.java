@@ -9,7 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -65,7 +68,7 @@ public class ModeloBug {
         return bug;
     }
 /////cambie private por static en este metodo y en el origenDatos
-   static void addNewBug(Bug newBug) {
+   void addNewBug(Bug newBug) {
        Connection miConnection = null;
        PreparedStatement miStatement = null;
        
@@ -93,6 +96,7 @@ public class ModeloBug {
         } catch (SQLException ex) {
             Logger.getLogger(ModeloBug.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     Bug getBug(int codigo) {
@@ -133,7 +137,7 @@ public class ModeloBug {
        
         try {
             miConnection = origenDatos.getConnection();
-            String instruccionSQL="UPDATE  BUG SET NAME=?,TYPE=?,DESCRIPTION=?,STATUS=?,USER=?"+
+            String instruccionSQL="UPDATE  BUG SET NAME=?,TYPE=?,DESCRIPTION=?,STATUS=?,USER=?,INITIALDATE=?"+
                     "WHERE ID=?";
             miStatement = miConnection.prepareCall(instruccionSQL);
             
@@ -142,10 +146,45 @@ public class ModeloBug {
             miStatement.setString(3, bug.getbDescription());
             miStatement.setString(4, bug.getbStatus());
             miStatement.setString(5, bug.getbUser());
-            miStatement.setInt(6, bug.getbCode());
+            java.util.Date utildate = bug.getBinitial_Date() ;
+            
+            long time = utildate.getTime();
+            java.sql.Date sqlDate = new java.sql.Date(time);
+            miStatement.setDate(6, sqlDate);
+            miStatement.setInt(7, bug.getbCode());
             miStatement.execute();
         }catch(SQLException e){
             
+        }
+    }
+
+    void addNewBug2(Bug newBug) {
+        Connection miConnection = null;
+        PreparedStatement miStatement = null;
+       
+        try {
+            miConnection = origenDatos.getConnection();
+            String instruccionSQL="INSERT INTO BUG (NAME,TYPE,DESCRIPTION,STATUS,USER)"+
+                    "VALUES(?,?,?,?,?)";
+            miStatement = miConnection.prepareCall(instruccionSQL);
+            
+            miStatement.setString(1, newBug.getbName());
+            miStatement.setString(2, newBug.getbType());
+            miStatement.setString(3, newBug.getbDescription());
+            miStatement.setString(4, newBug.getbStatus());
+            miStatement.setString(5, newBug.getbUser());
+            
+            //convirtiendo de fecha Util.Date a sql.Date
+            /*java.util.Date utilDate = newBug.getBinitial_Date();
+            long fechaEnlong = utilDate.getTime();
+            java.sql.Date fechaConvertida;
+            fechaConvertida = new java.sql.Date(fechaEnlong);            
+            miStatement.setDate(6, fechaConvertida);*/
+            
+            miStatement.execute();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ModeloBug.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

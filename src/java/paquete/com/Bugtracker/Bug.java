@@ -83,7 +83,14 @@ public class Bug {
         this.bUser = bUser;
         
     }
-
+     public Bug(String bName,String bType,String bDescription,String bStatus,String bUser){
+        
+        this.bName = bName;
+        this.bType = bType;
+        this.bDescription = bDescription;
+        this.bStatus = bStatus;
+        this.bUser = bUser;
+     }
     public Bug(int codi, String name, String type, String description, String status, String user, Date inicialf) {
         this.bCode = codi;
         this.bName = name;
