@@ -11,6 +11,20 @@ import java.util.Date;
  * @author kai
  */
 public class Bug {
+
+    /**
+     * @return the str
+     */
+    public String getStr() {
+        return str;
+    }
+
+    /**
+     * @param str the str to set
+     */
+    public void setStr(String str) {
+        this.str = str;
+    }
     
     private int bCode;
     private String bName;
@@ -20,6 +34,7 @@ public class Bug {
     private String bUser;
     private Date binitial_Date;
     private Date bfinal_Date;
+    private String str;
     
     //Constructor 1
 
@@ -45,6 +60,16 @@ public class Bug {
         this.binitial_Date = binitial_Date;
         this.bfinal_Date = bfinal_Date;
     }
+     public Bug(int bCode,String bName,String bType,String bDescription,String bStatus,String bUser,Date binitial_Date,String str){
+        this.bCode = bCode;
+        this.bName = bName;
+        this.bType = bType;
+        this.bDescription = bDescription;
+        this.bStatus = bStatus;
+        this.bUser = bUser;
+        this.binitial_Date = binitial_Date;
+        this.str = str;
+    }
     
     /** Contructor 2 sin el campo Codigo
      *
@@ -56,6 +81,7 @@ public class Bug {
      * @param binitial_Date
      * @param bfinal_Date
      */
+    
     public Bug(String bName,String bType,String bDescription,String bStatus,String bUser,Date binitial_Date,Date bfinal_Date){
         this.bName = bName;
         this.bType = bType;

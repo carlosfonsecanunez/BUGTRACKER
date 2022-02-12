@@ -48,6 +48,10 @@
                     <td><input type="text" name="inidate" id="inidate" value="${bugaActualizar.binitial_Date}"></td>
                 </tr>
                 <tr>
+                    <td><label for="findate">Final date</label></td>
+                    <td><input type="text" name="findate" id="findate" value="${bugaActualizar.str}"></td>
+                </tr>
+                <tr>
                     <td><input type="submit" name="boton_enviar" value="Enviar"></td>
                     <td><input type="submit" name="boton_limpiar" value="Limpiar"></td>
                 </tr>

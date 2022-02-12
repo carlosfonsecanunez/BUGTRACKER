@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -99,11 +101,13 @@ public class ModeloBug {
         
     }
 
-    Bug getBug(int codigo) {
+    Bug getBug(int codigo) throws ParseException {
         Bug bug=null;
         Connection miConnection = null;
         PreparedStatement ps = null;
         ResultSet miRs = null;
+        SimpleDateFormat formatdate=new SimpleDateFormat("yyyy-MM-dd");
+        String str=null;
         try {
             miConnection = origenDatos.getConnection();
             
@@ -120,8 +124,14 @@ public class ModeloBug {
                 String status = miRs.getString(5);
                 String user = miRs.getString(6);
                 Date inicialf = miRs.getDate(7);
-                
-                bug =new Bug(codi,name,type,description,status,user,inicialf);
+                Date finalf = miRs.getDate(8);
+                if (finalf==null){
+                    finalf=new Date();
+                    str = formatdate.format(finalf);
+                    bug =new Bug(codi,name,type,description,status,user,inicialf,str);
+                }else{
+                    str = formatdate.format(finalf);
+                    bug =new Bug(codi,name,type,description,status,user,inicialf,str);}
             }
                
             
@@ -137,7 +147,7 @@ public class ModeloBug {
        
         try {
             miConnection = origenDatos.getConnection();
-            String instruccionSQL="UPDATE  BUG SET NAME=?,TYPE=?,DESCRIPTION=?,STATUS=?,USER=?,INITIALDATE=?"+
+            String instruccionSQL="UPDATE  BUG SET NAME=?,TYPE=?,DESCRIPTION=?,STATUS=?,USER=?,INITIALDATE=?,FINALDATE=?"+
                     "WHERE ID=?";
             miStatement = miConnection.prepareCall(instruccionSQL);
             
@@ -151,7 +161,14 @@ public class ModeloBug {
             long time = utildate.getTime();
             java.sql.Date sqlDate = new java.sql.Date(time);
             miStatement.setDate(6, sqlDate);
-            miStatement.setInt(7, bug.getbCode());
+            
+            java.util.Date utildate2 = bug.getBfinal_Date() ;
+            
+            long time2 = utildate2.getTime();
+            java.sql.Date sqlDate2 = new java.sql.Date(time2);
+            miStatement.setDate(7, sqlDate2);
+            
+            miStatement.setInt(8, bug.getbCode());
             miStatement.execute();
         }catch(SQLException e){
             

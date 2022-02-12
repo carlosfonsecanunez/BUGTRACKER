@@ -184,9 +184,9 @@ public class ControladorBug extends HttpServlet {
         SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd");
         
         Date fechaini = formatdate.parse(request.getParameter("inidate"));
+        Date fechafi = formatdate.parse(request.getParameter("findate"));
         
-        
-        Bug bug = new Bug(codibug,name,type,desc,status,user,fechaini);
+        Bug bug = new Bug(codibug,name,type,desc,status,user,fechaini,fechafi);
         
         modeloBug.actualizar(bug);
         
@@ -194,7 +194,7 @@ public class ControladorBug extends HttpServlet {
         
     }
 
-    private void cargarBug(HttpServletRequest request, HttpServletResponse response) {
+    private void cargarBug(HttpServletRequest request, HttpServletResponse response) throws ParseException {
        
         int codigo = Integer.parseInt(request.getParameter("codigo_bug"));
         try{
