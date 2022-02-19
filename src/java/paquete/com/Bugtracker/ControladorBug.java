@@ -68,7 +68,7 @@ public class ControladorBug extends HttpServlet {
                 break;
              case "actualizarBBDD" : actualizar(request,response);
                 break;
-                
+             case "eliminar" : eliminar(request,response);  
              default : obtenerBugs(request,response);
         }
     }
@@ -205,6 +205,12 @@ public class ControladorBug extends HttpServlet {
         dispatcher.forward(request, response);
         }catch(ServletException | IOException e){}
         }
+
+    private void eliminar(HttpServletRequest request, HttpServletResponse response) {
+        int codigo =Integer.parseInt(request.getParameter("codigo_bug"));
+        modeloBug.eliminar(codigo);
+        obtenerBugs(request,response);
+    }
         
 
     

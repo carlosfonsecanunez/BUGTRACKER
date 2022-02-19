@@ -204,4 +204,21 @@ public class ModeloBug {
             Logger.getLogger(ModeloBug.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    void eliminar(int codigo) {
+        Connection miconec = null;
+        PreparedStatement miP = null;
+        int cod = codigo;
+        String strsql="Delete From BUG where ID=?";
+        
+        try {
+            miconec = origenDatos.getConnection();
+            miP = miconec.prepareCall(strsql);
+            miP.setInt(1, cod);
+            miP.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ModeloBug.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 }

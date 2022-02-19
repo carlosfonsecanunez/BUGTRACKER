@@ -47,7 +47,11 @@
                 <c:url var="linktemp" value="ControladorBug">
                     <c:param name="instruccion" value="cargar"></c:param>
                     <c:param name="codigo_bug" value="${temBug.bCode}"></c:param>
-                </c:url>   
+                </c:url>
+                <c:url var="linktempEliminar" value="ControladorBug">
+                    <c:param name="instruccion" value="eliminar"></c:param>
+                    <c:param name="codigo_bug" value="${temBug.bCode}"></c:param>
+                </c:url> 
                 <tr>
                     <td class="filas">${temBug.bCode}</td>
                     <td class="filas">${temBug.bName}</td>
@@ -57,7 +61,7 @@
                     <td class="filas">${temBug.bUser}</td>
                     <td class="filas">${temBug.binitial_Date}</td>
                     <td class="filas">${temBug.bfinal_Date}</td>    
-                    <td class="filas"><a href="${linktemp}">Update</a></td> 
+                    <td class="filas"><a href="${linktemp}">Update</a>&nbsp;&nbsp;<a href="${linktempEliminar}">Delete</td> 
                 </tr>
             </c:forEach>
         </table>
