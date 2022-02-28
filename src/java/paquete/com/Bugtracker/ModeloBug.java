@@ -221,4 +221,36 @@ public class ModeloBug {
         }
         
     }
+
+    Usuario verificarUser(String user, String passw) {
+        Usuario userV = null;
+        Connection cn = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        String usr = user;
+        String psw = passw;
+        String sql = "SELECT * FROM USERS WHERE USERNAME=?";
+        try {
+            cn = origenDatos.getConnection();
+            pr = cn.prepareCall(sql);
+            pr.setString(1, usr);
+            rs = pr.executeQuery();
+            while (rs.next()){
+                int userId = rs.getInt(1);
+                String userName = rs.getString(2);
+                String passWord = rs.getString(3);
+                int accessType = rs.getInt(4);
+                    if(userName.equals(user) && passWord.equals(passw)){
+                       userV = new Usuario(userName,passWord,accessType,userId);
+                    }
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ModeloBug.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        return userV;
+            
+    }
 }

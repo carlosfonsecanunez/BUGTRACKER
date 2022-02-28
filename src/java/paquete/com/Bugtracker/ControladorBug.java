@@ -57,9 +57,16 @@ public class ControladorBug extends HttpServlet {
          String elcomando = request.getParameter("instruccion");
          
         
-        if(elcomando==null) elcomando="listar";
+        if(elcomando==null) elcomando="loguear";
         
-        switch(elcomando){
+        switch(elcomando){/*
+            insertar un case con valor "loguear" con  un metodo que compruebe el usuario y la contraseña 
+            
+            */
+             case "loguear" : logUsuario(request,response);
+                break;
+             case "verificar_user" : verificarUser(request,response);
+                break;
              case "listar" : obtenerBugs(request,response);
                 break;
              case "insertar_BBDD" : insertarBugs(request,response);
@@ -69,7 +76,9 @@ public class ControladorBug extends HttpServlet {
              case "actualizarBBDD" : actualizar(request,response);
                 break;
              case "eliminar" : eliminar(request,response);  
-             default : obtenerBugs(request,response);
+                break;
+             //default : obtenerBugs(request,response);
+             default : logUsuario(request,response);
         }
     }
 
@@ -211,6 +220,31 @@ public class ControladorBug extends HttpServlet {
         modeloBug.eliminar(codigo);
         obtenerBugs(request,response);
     }
+
+    private void logUsuario(HttpServletRequest request, HttpServletResponse response) {
+         try {
+             RequestDispatcher miDispatcher = request.getRequestDispatcher("/LoginUsuario.jsp");
+              
+             miDispatcher.forward(request, response);
+         } catch (ServletException ex) {
+             Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (IOException ex) {
+             Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }
+
+    private void verificarUser(HttpServletRequest request, HttpServletResponse response) {
+        String user = request.getParameter("user");
+        String passw = request.getParameter("password");
+        Usuario userVerify = modeloBug.verificarUser(user,passw);
+            if (userVerify != null){
+                obtenerBugs(request,response);
+            }
+            else{
+                logUsuario(request,response);
+            }
+    }
+    
         
 
     
