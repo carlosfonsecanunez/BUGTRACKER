@@ -28,8 +28,12 @@
                 <tr>
                     <td><input type="text" name="password" id="password"></td>
                 </tr>
-            </table>
-            <button type="submit" id="button_log" value="Login">Login</button>
+                <tr>
+                    <td><button type="submit" id="button_log" value="Login">Login</button></td>
+                    
+                </tr>
+            </table>        
         </form>
+        <button type="submit" id="button_reg" value="Register" onclick="window.location.href='Registrar_usuario.jsp'">New? Register her!</button>
     </body>
 </html>
