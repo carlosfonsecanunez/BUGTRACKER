@@ -15,7 +15,7 @@
         <h1>Register user</h1>
         <form name="form1" action="ControladorBug" method="get">
         <input type="hidden" name="instruccion" value="registrar_user">
-        <input type="hidden" name="access_type" value="1">
+        <input type="hidden" name="access_type" value="1" id="access_type">
             <table>
                 <tr>
                     <td>

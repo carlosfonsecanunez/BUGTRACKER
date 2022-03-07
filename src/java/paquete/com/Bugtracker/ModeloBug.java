@@ -253,4 +253,38 @@ public class ModeloBug {
         return userV;
             
     }
+
+    Usuario registrarUser(Usuario usr) {
+        Usuario usr2 = null;
+        Connection cn = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        String sql1 = "SELECT * FROM USERS WHERE USERNAME = ?";
+        String sql2 = "INSERT INTO USERS (USERNAME,PASSWORD,ACCESSTYPE) VALUES(?,?,?)";
+                
+        
+        try {
+            cn = origenDatos.getConnection();
+            pr = cn.prepareCall(sql1);
+            pr.setString(1, usr.getUserName());
+            rs = pr.executeQuery();
+            if (rs.next()){
+                String userN = rs.getString(2);
+                String passW = rs.getString(3);
+                int accessT = rs.getInt(4);
+                usr2 = new Usuario(userN,passW,accessT);
+                
+            }else{
+                pr = cn.prepareCall(sql2);
+                pr.setString(1, usr.getUserName());
+                pr.setString(2, usr.getUserPass());
+                pr.setInt(3, usr.getAccessType());
+                pr.execute();
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ModeloBug.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usr2;
+    }
 }

@@ -67,6 +67,8 @@ public class ControladorBug extends HttpServlet {
                 break;
              case "verificar_user" : verificarUser(request,response);
                 break;
+             case "registrar_user" : registrarUser(request,response);
+                break;
              case "listar" : obtenerBugs(request,response);
                 break;
              case "insertar_BBDD" : insertarBugs(request,response);
@@ -243,6 +245,29 @@ public class ControladorBug extends HttpServlet {
             else{
                 logUsuario(request,response);
             }
+    }
+
+    private void registrarUser(HttpServletRequest request, HttpServletResponse response) {
+        String userName = request.getParameter("name");
+        String passWord = request.getParameter("password");
+        int accessType = Integer.parseInt(request.getParameter("access_type"));
+        Usuario usr = new Usuario (userName,passWord,accessType);
+        Usuario usr2 = null;
+        RequestDispatcher miDispatcher = null;
+        usr2 = modeloBug.registrarUser(usr);
+        if (usr2 == null){
+            obtenerBugs(request,response);
+        }else{
+            try {
+                request.setAttribute("usarioNoRegistrado", usr2);
+                miDispatcher = request.getRequestDispatcher("/Registrar_usuario.jsp");
+                miDispatcher.forward(request, response);
+            } catch (ServletException ex) {
+                Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
         

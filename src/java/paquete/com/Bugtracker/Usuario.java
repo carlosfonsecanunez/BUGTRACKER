@@ -76,4 +76,10 @@ public class Usuario {
         this.accessType = accessType;
         this.userId = userId;
     }
+    
+    public Usuario(String userName,String userPass,int accessType){
+        this.userName = userName;
+        this.userPass = userPass;
+        this.accessType = accessType;      
+    }
 }
