@@ -46,5 +46,14 @@
              
            </table>
         </form>
+        
+        <script>
+            date = new Date();
+            year = date.getFullYear();
+            month = date.getMonth() + 1;
+            day = date.getDate();
+            document.getElementById("init_date").value =  year + "-" + month + "-" + day;
+        </script>
+
     </body>
 </html>

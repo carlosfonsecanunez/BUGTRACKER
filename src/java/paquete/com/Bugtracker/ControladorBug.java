@@ -250,25 +250,28 @@ public class ControladorBug extends HttpServlet {
     private void registrarUser(HttpServletRequest request, HttpServletResponse response) {
         String userName = request.getParameter("name");
         String passWord = request.getParameter("password");
+        String passWord2 = request.getParameter("password2");
         int accessType = Integer.parseInt(request.getParameter("access_type"));
         Usuario usr = new Usuario (userName,passWord,accessType);
         Usuario usr2 = null;
         RequestDispatcher miDispatcher = null;
-        usr2 = modeloBug.registrarUser(usr);
-        if (usr2 == null){
-            obtenerBugs(request,response);
-        }else{
-            try {
-                request.setAttribute("usarioNoRegistrado", usr2);
-                miDispatcher = request.getRequestDispatcher("/Registrar_usuario.jsp");
-                miDispatcher.forward(request, response);
-            } catch (ServletException ex) {
-                Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
+        if (passWord.equals(passWord2)){
+            usr2 = modeloBug.registrarUser(usr);
+            if (usr2 == null){
+                obtenerBugs(request,response);
             }
+        }else{
+               try {
+                    request.setAttribute("usarioNoRegistrado", usr);
+                    miDispatcher = request.getRequestDispatcher("/Registrar_usuario.jsp");
+                    miDispatcher.forward(request, response);
+                } catch (ServletException ex) {
+                    Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(ControladorBug.class.getName()).log(Level.SEVERE, null, ex);
+                }
         }
-    }
+    } 
     
         
 

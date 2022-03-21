@@ -22,7 +22,7 @@
                         <label for="name">Name </label>
                     </td>
                     <td>
-                        <input type="text" name="name" id="name">
+                        <input type="text" name="name" id="name" value="${usarioNoRegistrado.userName}">
                     </td>
                 </tr>
                 <tr>
